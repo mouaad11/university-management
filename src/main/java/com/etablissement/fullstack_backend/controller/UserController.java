@@ -1,9 +1,11 @@
 package com.etablissement.fullstack_backend.controller;
 
-import com.etablissement.fullstack_backend.model.*;
-import com.etablissement.fullstack_backend.repository.*;
+import com.etablissement.fullstack_backend.exception.ResourceNotFoundException;
+import com.etablissement.fullstack_backend.model.User;
+import com.etablissement.fullstack_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,5 +52,16 @@ public class UserController {
             userRepository.delete(user);
             return ResponseEntity.noContent().build();
         }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/confirm-user/{userId}")
+    public ResponseEntity<?> confirmUserAccount(@PathVariable Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        user.setIsConfirmed(true);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("User account confirmed successfully!");
     }
 }

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("PROFESSOR")
+@DiscriminatorValue("Professor")
 public class Professor extends User {
 
     @Column

@@ -17,8 +17,8 @@ public class Reservation {
     private Room room;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false)
-    private Professor teacher;
+    @JoinColumn(name = "professor_id", nullable = false)
+    private Professor professor;
 
     @Column(nullable = false)
     private LocalDateTime startTime;
@@ -36,9 +36,9 @@ public class Reservation {
     public Reservation() {}
 
     // Constructor with fields
-    public Reservation(Room room, Professor teacher, LocalDateTime startTime, LocalDateTime endTime, String purpose, String status) {
+    public Reservation(Room room, Professor professor, LocalDateTime startTime, LocalDateTime endTime, String purpose, String status) {
         this.room = room;
-        this.teacher = teacher;
+        this.professor = professor;
         this.startTime = startTime;
         this.endTime = endTime;
         this.purpose = purpose;
@@ -63,11 +63,11 @@ public class Reservation {
     }
 
     public Professor getProfessor() {
-        return teacher;
+        return professor;
     }
 
-    public void setProfessor(Professor teacher) {
-        this.teacher = teacher;
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
     public LocalDateTime getStartTime() {
@@ -126,7 +126,7 @@ public class Reservation {
         return "Reservation{" +
                 "id=" + id +
                 ", room=" + room +
-                ", teacher=" + teacher +
+                ", professor=" + professor +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", purpose='" + purpose + '\'' +

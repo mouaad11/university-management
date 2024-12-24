@@ -3,7 +3,7 @@ package com.etablissement.fullstack_backend.model;
 import jakarta.persistence.*;
 
 @Entity
-@DiscriminatorValue("STUDENT")
+@DiscriminatorValue("Student")
 public class Student extends User {
 
     @Column

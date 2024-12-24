@@ -27,6 +27,26 @@ public class User {
 
     @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
+    private Boolean isConfirmed = false;  // Default to false
+    @Enumerated(EnumType.STRING)
+    private ERole role;
+
+    public Boolean getConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+
+    public ERole getRole() {
+        return role;
+    }
+
+    public void setRole(ERole role) {
+        this.role = role;
+    }
 
     // Default constructor
     public User() {}
@@ -39,6 +59,12 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
 
     // Getters and Setters
     public Long getId() {
@@ -88,6 +114,13 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public Boolean getIsConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setIsConfirmed(Boolean confirmed) {
+        isConfirmed = confirmed;
+    }
 
     // equals method
     @Override
@@ -118,3 +151,4 @@ public class User {
                 '}';
     }
 }
+
