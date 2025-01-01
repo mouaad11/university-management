@@ -5,12 +5,22 @@ public class JwtResponse {
     private Long id;
     private String username;
     private String email;
+    private String role;
 
-    public JwtResponse(String token, Long id, String username, String email) {
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public JwtResponse(String token, Long id, String username, String email, String role) {
         this.token = token;
         this.id = id;
         this.username = username;
         this.email = email;
+        this.role = role;
     }
 
     public String getToken() {

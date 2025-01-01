@@ -1,5 +1,6 @@
 package com.etablissement.fullstack_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +12,7 @@ public class Student extends User {
 
     @ManyToOne
     @JoinColumn(name = "classe_id")
+    @JsonIgnoreProperties("students")
     private Classe classe;
 
     // Default constructor

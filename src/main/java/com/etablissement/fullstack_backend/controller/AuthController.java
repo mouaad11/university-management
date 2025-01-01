@@ -55,11 +55,13 @@ public class AuthController {
         }
 
         String jwt = jwtUtils.generateJwtToken(userDetails);  // Pass the UserDetailsImpl directly
+        String role = userDetails.getRole();
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail()));
+                userDetails.getEmail(),
+                role));
     }
 
 

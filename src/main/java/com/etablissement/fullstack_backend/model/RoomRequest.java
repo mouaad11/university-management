@@ -1,58 +1,61 @@
 package com.etablissement.fullstack_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.Objects;
 
 @Entity
-@Table(name = "schedules")
-public class Schedule {
+public class RoomRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "classe_id")
-    private Classe classe;
+    @JoinColumn(name = "professor_id")
+    @JsonIgnoreProperties({"schedules","password"})
+    private Professor professor;
 
     @ManyToOne
-    @JoinColumn(name = "professor_id", nullable = false)
-    private Professor professor;
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
-    @Column(nullable = false)
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
 
-    @Column(nullable = false)
     @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
 
-    @Column(nullable = false)
     private String subject;
-
-    @Column(nullable = false)
-    private String type; // COURSE, TD, TP
+    private String type; // COURSE, TD, TP, etc.
+    private boolean isApproved = false; // Default to false
 
     // Default constructor
-    public Schedule() {}
+    public RoomRequest() {}
 
     // Constructor with fields
-    public Schedule(Classe classe, Professor professor, Room room, DayOfWeek dayOfWeek,
-                    LocalTime startTime, LocalTime endTime, String subject, String type) {
-        this.classe = classe;
+    public RoomRequest(Professor professor, Room room, DayOfWeek dayOfWeek, LocalTime startTime,
+                       LocalTime endTime, String subject, String type) {
         this.professor = professor;
+        this.room = room;
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.subject = subject;
+        this.type = type;
+    }
+
+    public RoomRequest(Student student, Room room, DayOfWeek dayOfWeek, LocalTime startTime,
+                       LocalTime endTime, String subject, String type) {
+        this.student = student;
         this.room = room;
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
@@ -70,20 +73,20 @@ public class Schedule {
         this.id = id;
     }
 
-    public Classe getClasse() {
-        return classe;
-    }
-
-    public void setClasse(Classe classe) {
-        this.classe = classe;
-    }
-
     public Professor getProfessor() {
         return professor;
     }
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Room getRoom() {
@@ -134,36 +137,11 @@ public class Schedule {
         this.type = type;
     }
 
-    // equals, hashCode and toString
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Schedule schedule = (Schedule) o;
-        return Objects.equals(id, schedule.id) &&
-                Objects.equals(classe, schedule.classe) &&
-                Objects.equals(dayOfWeek, schedule.dayOfWeek) &&
-                Objects.equals(startTime, schedule.startTime) &&
-                Objects.equals(endTime, schedule.endTime);
+    public boolean isApproved() {
+        return isApproved;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, classe, dayOfWeek, startTime, endTime);
-    }
-
-    @Override
-    public String toString() {
-        return "Schedule{" +
-                "id=" + id +
-                ", classe=" + classe +
-                ", professor=" + professor +
-                ", room=" + room +
-                ", dayOfWeek=" + dayOfWeek +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", subject='" + subject + '\'' +
-                ", type='" + type + '\'' +
-                '}';
+    public void setApproved(boolean approved) {
+        isApproved = approved;
     }
 }

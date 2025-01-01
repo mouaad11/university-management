@@ -15,17 +15,20 @@ public class UserDetailsImpl implements UserDetails {
     private String email;
     private String password;
     private Boolean isConfirmed;  // New attribute
+    private String role;
     private Collection<? extends GrantedAuthority> authorities;
 
     // Constructor to initialize all attributes including isConfirmed
     public UserDetailsImpl(Long id, String username, String email, String password,
-                           Boolean isConfirmed, Collection<? extends GrantedAuthority> authorities) {
+                           Boolean isConfirmed, String role,  Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.isConfirmed = isConfirmed;
+        this.role = role;
         this.authorities = authorities;
+
     }
 
     // Updated build method to include isConfirmed
@@ -40,6 +43,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.getIsConfirmed(),  // Add isConfirmed here
+                user.getRole().toString(),
                 authorities
         );
     }
@@ -52,6 +56,10 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getPassword() {
         return password;  // Return the actual password
+    }
+
+    public String getRole() {
+        return role;
     }
 
     @Override

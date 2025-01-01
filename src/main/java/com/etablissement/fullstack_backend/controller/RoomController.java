@@ -4,6 +4,7 @@ import com.etablissement.fullstack_backend.model.Room;
 import com.etablissement.fullstack_backend.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class RoomController {
     private RoomRepository roomRepository;
 
     @GetMapping("/rooms")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STUDENT', 'PROFESSOR')")
     public ResponseEntity<List<Room>> getAllRooms() {
         return ResponseEntity.ok(roomRepository.findAll());
     }
@@ -27,6 +29,7 @@ public class RoomController {
         return room.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/rooms")
     public ResponseEntity<Room> createRoom(@RequestBody Room room) {
         return ResponseEntity.ok(roomRepository.save(room));

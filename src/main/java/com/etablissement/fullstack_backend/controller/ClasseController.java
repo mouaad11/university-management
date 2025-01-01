@@ -4,6 +4,7 @@ import com.etablissement.fullstack_backend.model.Classe;
 import com.etablissement.fullstack_backend.repository.ClasseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class ClasseController {
         Optional<Classe> classeEntity = classeRepository.findById(id);
         return classeEntity.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     @PostMapping("/classes")
     public ResponseEntity<Classe> createClass(@RequestBody Classe classeEntity) {
         return ResponseEntity.ok(classeRepository.save(classeEntity));

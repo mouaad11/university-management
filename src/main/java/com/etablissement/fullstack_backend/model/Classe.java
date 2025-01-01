@@ -1,9 +1,11 @@
 package com.etablissement.fullstack_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "classes")
@@ -23,6 +25,7 @@ public class Classe {
     private String department;
 
     @OneToMany(mappedBy = "classe")
+    @JsonIgnoreProperties("classe")
     private Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy = "classe")
