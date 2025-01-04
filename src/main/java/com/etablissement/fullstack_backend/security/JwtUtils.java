@@ -170,5 +170,31 @@ public class JwtUtils {
         return claims.get("role", List.class);
     }
 
+    /**
+     * Extract a single role from the JWT token.
+     * @param token The JWT token.
+     * @return The first role from the token, or null if no roles are present.
+     */
+    public String getSingleRoleFromJwtToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            // Get the roles from the token
+            List<String> roles = claims.get("role", List.class);
+
+            // Return the first role if available
+            if (roles != null && !roles.isEmpty()) {
+                return roles.get(0);  // Return the first role
+            }
+        } catch (Exception e) {
+            logger.error("Error extracting role from token: {}", e.getMessage());
+        }
+        return null;  // Return null if no roles were found or an error occurred
+    }
+
 
 }
