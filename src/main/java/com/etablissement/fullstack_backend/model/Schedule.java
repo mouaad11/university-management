@@ -1,6 +1,7 @@
 package com.etablissement.fullstack_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.DayOfWeek;
@@ -17,10 +18,13 @@ public class Schedule {
 
     @ManyToOne
     @JoinColumn(name = "classe_id")
+    @JsonIgnoreProperties("schedules")
     private Classe classe;
+
 
     @ManyToOne
     @JoinColumn(name = "professor_id", nullable = false)
+    @JsonIgnoreProperties("schedules")
     private Professor professor;
 
     @ManyToOne

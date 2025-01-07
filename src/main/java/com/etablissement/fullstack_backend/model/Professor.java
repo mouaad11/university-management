@@ -1,6 +1,11 @@
 package com.etablissement.fullstack_backend.model;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +17,7 @@ public class Professor extends User {
     private String department;
 
     @OneToMany(mappedBy = "professor")
+    @JsonIgnoreProperties("professor")
     private Set<Schedule> schedules = new HashSet<>();
 
     // Default constructor

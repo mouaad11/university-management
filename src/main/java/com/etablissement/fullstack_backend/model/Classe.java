@@ -25,10 +25,11 @@ public class Classe {
     private String department;
 
     @OneToMany(mappedBy = "classe")
-    @JsonIgnoreProperties("classe")
+
     private Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy = "classe")
+    @JsonIgnoreProperties("classe")
     private Set<Schedule> schedules = new HashSet<>();
 
     // Default constructor
