@@ -23,7 +23,7 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private AuthTokenFilter authTokenFilter;
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userRepository.findAll());
