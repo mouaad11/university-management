@@ -17,6 +17,11 @@ public class RoomRequest {
     @JoinColumn(name = "professor_id")
     @JsonIgnoreProperties({"schedules","password"})
     private Professor professor;
+    
+    @ManyToOne
+    @JoinColumn(name = "classe_id")
+    @JsonIgnoreProperties("classe")
+    private Classe classe;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -42,10 +47,11 @@ public class RoomRequest {
     public RoomRequest() {}
 
     // Constructor with fields
-    public RoomRequest(Professor professor, Room room, DayOfWeek dayOfWeek, LocalTime startTime,
+    public RoomRequest(Professor professor, Room room, Classe classe, DayOfWeek dayOfWeek, LocalTime startTime,
                        LocalTime endTime, String subject, String type) {
         this.professor = professor;
         this.room = room;
+        this.classe = classe;
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -76,8 +82,17 @@ public class RoomRequest {
     public Professor getProfessor() {
         return professor;
     }
+    
 
-    public void setProfessor(Professor professor) {
+    public Classe getClasse() {
+		return classe;
+	}
+
+	public void setClasse(Classe classe) {
+		this.classe = classe;
+	}
+
+	public void setProfessor(Professor professor) {
         this.professor = professor;
     }
 

@@ -62,7 +62,7 @@ public class RoomRequestController {
 
         // Create a new schedule for the approved request
         Schedule schedule = new Schedule(
-                null, // Classe (if needed)
+        		roomRequest.getClasse(),
                 roomRequest.getProfessor(),
                 roomRequest.getRoom(),
                 roomRequest.getDayOfWeek(),

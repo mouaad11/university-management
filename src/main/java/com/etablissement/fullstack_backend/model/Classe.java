@@ -25,7 +25,7 @@ public class Classe {
     private String department;
 
     @OneToMany(mappedBy = "classe")
-
+    @JsonIgnoreProperties({"students","classe"})
     private Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy = "classe")

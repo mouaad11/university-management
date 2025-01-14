@@ -12,7 +12,7 @@ public class Student extends User {
 
     @ManyToOne
     @JoinColumn(name = "classe_id")
-    @JsonIgnoreProperties("students")
+    @JsonIgnoreProperties({"students","classe"})
     private Classe classe;
 
     // Default constructor
